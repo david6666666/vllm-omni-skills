@@ -52,18 +52,7 @@ Can be combined with TeaCache, but test independently first to measure impact.
 
 ## Quantization
 
-Reduce model precision for lower memory and faster inference:
-
-```bash
-# BF16 (default for Ampere+)
-vllm serve <model> --omni --dtype bfloat16
-
-# FP16
-vllm serve <model> --omni --dtype float16
-
-# INT8 weight-only quantization
-vllm serve <model> --omni --quantization awq
-```
+For full quantization guidance (method selection, AWQ/GPTQ workflows, FP8 KV cache, quality verification), see the dedicated **[vllm-omni-quantization](../vllm-omni-quantization/SKILL.md)** skill.
 
 ## CPU Offloading
 

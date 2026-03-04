@@ -28,9 +28,10 @@ This skills collection provides contextual, step-by-step guidance that an AI cod
 | 7 | `vllm-omni-audio-tts` | Audio generation and TTS (Qwen3-TTS, MiMo-Audio, Stable-Audio) | P1 |
 | 8 | `vllm-omni-multimodal` | End-to-end omni-modality (Qwen2.5-Omni, Qwen3-Omni) | P1 |
 | 9 | `vllm-omni-distributed` | Distributed inference, disaggregation (OmniConnector) | P2 |
-| 10 | `vllm-omni-perf` | Performance tuning, benchmarking, TeaCache, quantization | P2 |
-| 11 | `vllm-omni-contrib` | Contributing new models, development workflow | P2 |
-| 12 | `vllm-omni-cicd` | CI/CD pipelines for vllm-omni deployments | P2 |
+| 10 | `vllm-omni-perf` | Performance tuning, benchmarking, TeaCache, CPU offloading | P2 |
+| 11 | `vllm-omni-quantization` | Quantization (AWQ, GPTQ, FP8), memory reduction, quality verification | P2 |
+| 12 | `vllm-omni-contrib` | Contributing new models, development workflow | P2 |
+| 13 | `vllm-omni-cicd` | CI/CD pipelines for vllm-omni deployments | P2 |
 
 ## Success Criteria
 

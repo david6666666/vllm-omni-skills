@@ -15,7 +15,8 @@ A collection of AI assistant skills for [vLLM-Omni](https://github.com/vllm-proj
 | [vllm-omni-audio-tts](skills/vllm-omni-audio-tts/) | Audio generation and TTS (Qwen3-TTS, MiMo-Audio, Stable-Audio) |
 | [vllm-omni-multimodal](skills/vllm-omni-multimodal/) | End-to-end omni-modality models (Qwen-Omni) |
 | [vllm-omni-distributed](skills/vllm-omni-distributed/) | Distributed inference, disaggregation, Ray |
-| [vllm-omni-perf](skills/vllm-omni-perf/) | Performance tuning, benchmarking, TeaCache, quantization |
+| [vllm-omni-perf](skills/vllm-omni-perf/) | Performance tuning, benchmarking, TeaCache, CPU offloading |
+| [vllm-omni-quantization](skills/vllm-omni-quantization/) | Quantization (AWQ, GPTQ, FP8), memory reduction, quality verification |
 | [vllm-omni-contrib](skills/vllm-omni-contrib/) | Contributing new models and development workflow |
 | [vllm-omni-cicd](skills/vllm-omni-cicd/) | CI/CD pipelines for model deployments |
 
@@ -80,7 +81,7 @@ vllm-omni-skills/
 ├── scripts/
 │   └── validate_all.py     # Skill validation tool
 └── skills/
-    └── vllm-omni-*/        # 12 skill directories
+    └── vllm-omni-*/        # 13 skill directories
         ├── SKILL.md         # Main skill instructions
         ├── references/      # Detailed reference docs
         └── scripts/         # Utility scripts (some skills)
