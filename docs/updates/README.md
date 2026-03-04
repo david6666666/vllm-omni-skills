@@ -1,25 +1,25 @@
-# vLLM-Omni Skills 更新日志索引
+# vLLM-Omni Skills Update Log Index
 
-## 快速导航
+## Quick Navigation
 
-### 按Skill查看
-- [Image Generation](image-gen.md) - 图像生成模型更新
-- [Video Generation](video-gen.md) - 视频生成模型更新
-- [Audio & TTS](audio-tts.md) - 音频和语音合成更新
-- [API](api.md) - API端点和接口更新
-- [Quantization](quantization.md) - 量化方法更新
-- [Performance](performance.md) - 性能优化更新
-- [Distributed](distributed.md) - 分布式推理更新
-- [CI/CD](cicd.md) - CI/CD流程更新
+### By Skill
+- [Image Generation](image-gen.md) - Image generation model updates
+- [Video Generation](video-gen.md) - Video generation model updates
+- [Audio & TTS](audio-tts.md) - Audio and TTS updates
+- [API](api.md) - API endpoint and interface updates
+- [Quantization](quantization.md) - Quantization method updates
+- [Performance](performance.md) - Performance optimization updates
+- [Distributed](distributed.md) - Distributed inference updates
+- [CI/CD](cicd.md) - CI/CD pipeline updates
 
-### 按时间查看
-- [2026-03 (Week 1)](./#2026-03) - 最新更新
-- [2026-02](archive/2026-02.md) - 归档
-- [2026-01](archive/2026-01.md) - 归档
+### By Time
+- [2026-03 (Week 1)](./#2026-03) - Latest updates
+- [2026-02](archive/2026-02.md) - Archive
+- [2026-01](archive/2026-01.md) - Archive
 
 ---
 
-## 最近更新 (最近7天)
+## Recent Updates (Last 7 Days)
 
 ### 2026-03-04
 - **[image-gen]** HunyuanImage3 image editing support ([#1644](https://github.com/vllm-project/vllm-omni/pull/1644))
@@ -34,10 +34,10 @@
 
 ---
 
-## 更新统计
+## Update Statistics
 
-| Skill | 本周更新 | 本月更新 | 总计 |
-|-------|---------|---------|------|
+| Skill | This Week | This Month | Total |
+|-------|-----------|------------|-------|
 | image-gen | 3 | 3 | 3 |
 | api | 2 | 2 | 2 |
 | audio-tts | 2 | 2 | 2 |
@@ -47,33 +47,33 @@
 
 ---
 
-## 归档策略
+## Archive Strategy
 
-**每4周归档一次**（对应vllm-omni的release周期）
+**Archive every 4 weeks** (aligned with vllm-omni release cycle)
 
-- 当前周期: 2026-03-04 ~ 2026-04-01
-- 下次归档: 2026-04-01
+- Current cycle: 2026-03-04 ~ 2026-04-01
+- Next archive: 2026-04-01
 
 ---
 
-## 如何使用
+## How to Use
 
-### 查看特定skill的更新
+### View updates for a specific skill
 ```bash
-# 查看图像生成相关的所有更新
+# View all image generation updates
 cat docs/updates/image-gen.md
 
-# 查看最近更新
+# View recent updates
 head -50 docs/updates/api.md
 ```
 
-### 查看整体变化
+### View overall changes
 ```bash
-# 查看集中changelog
+# View centralized changelog
 cat docs/CHANGELOG.md
 ```
 
 ---
 
-*由 vllm-omni-skills auto-update 系统自动维护*
-*归档周期: 4周 (与vllm-omni release对齐)*
+*Maintained by vllm-omni-skills auto-update system*
+*Archive cycle: 4 weeks (aligned with vllm-omni release)*
