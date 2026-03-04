@@ -1,6 +1,7 @@
-# vllm-omni-api 更新日志
+# vllm-omni-api Update Log
 
-> 最后更新: 2026-03-04
+> Last updated: 2026-03-04
+> [View all skills updates](../CHANGELOG.md) | [Back to index](README.md)
 
 ---
 
@@ -8,12 +9,12 @@
 **[PR #1438](https://github.com/vllm-project/vllm-omni/pull/1438)** - Streaming output
 
 **Added**:
-- <!-- markdownlint-disable -->
-- PLEASE FILL IN THE PR DESCRIPTION HERE ENSURING ALL CHECKLIST ITEMS (AT THE BOTTOM) HAVE BEEN CONSIDERED.
 - Simple streaming output implementation for Qwene3TTS models for the latest disaggregated inference pipeline.
+- one can test it with:
+- ```
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -22,12 +23,12 @@
 **[PR #1504](https://github.com/vllm-project/vllm-omni/pull/1504)** - Speed up diffusion model startup by multi-thread weight loading
 
 **Added**:
-- <!-- markdownlint-disable -->
-- PLEASE FILL IN THE PR DESCRIPTION HERE ENSURING ALL CHECKLIST ITEMS (AT THE BOTTOM) HAVE BEEN CONSIDERED.
 - The weight loading time for large diffusion model are large, ~3min for QwenImage, ~5min for Wan2.2-I2V 14B. This PR reduce weight loading time by loading safetensors shards in parallel with a thread pool instead of sequentially.
+- Helpful in:
+- - Reduce wait time for CI or benchmarking board
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -36,12 +37,12 @@
 **[PR #1509](https://github.com/vllm-project/vllm-omni/pull/1509)** - remove unused logger in omni_diffusion (#531)
 
 **Changed**:
-- <!-- markdownlint-disable -->
 - Resolve #531 (the first item, which is the only item that still applies in the current codebase)
 - As is explained in the comment of 531 (https://github.com/vllm-project/vllm-omni/issues/531#issuecomment-3964798019), other items are no longer applicable or have already been fixed in today's codebase
+- - Test that the same amount of logging output is produced (i.e., expect the correct logging level and format have been already handled elsewhere)
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -50,12 +51,12 @@
 **[PR #1522](https://github.com/vllm-project/vllm-omni/pull/1522)** - Use uds for zmq address if not set --stage-id
 
 **Added**:
-- <!-- markdownlint-disable -->
-- PLEASE FILL IN THE PR DESCRIPTION HERE ENSURING ALL CHECKLIST ITEMS (AT THE BOTTOM) HAVE BEEN CONSIDERED.
 - Quik fix test failure:
+- https://buildkite.com/vllm/vllm-omni/builds/3417/steps/waterfall?sid=019c99b1-9a45-48c5-9bfe-1776c5704c1c&tab=output
+- Because ports are pre-allocated whose number are equal to stage number to used by zmq communication between api server and  engines. So there is a chance that they allocate same port for different stage, and port conflict happens then.
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -69,7 +70,7 @@
 - - Load codec frame rate from speech tokenizer config at init, and provide a callback that estimates `ref_code_len = ceil(audio_duration * codec_frame_rate)` from the resolved waveform
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -79,11 +80,11 @@
 
 **Fixed**:
 - When init class of OmniDiffusion, it may cause unexpected crash since var "pipeline_class" may not be initialied.
-- <!-- markdownlint-disable -->
-- PLEASE FILL IN THE PR DESCRIPTION HERE ENSURING ALL CHECKLIST ITEMS (AT THE BOTTOM) HAVE BEEN CONSIDERED.
+- Fix unexpected crash when init OmniDiffusion.
+- python examples/offline_inference/bagel/end2end.py --model /data/BAGEL-7B-MoT --modality text2img --prompts 'A cute cat'
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -92,12 +93,12 @@
 **[PR #1566](https://github.com/vllm-project/vllm-omni/pull/1566)** - Import InputPreprocessor into Renderer
 
 **Fixed**:
-- <!-- markdownlint-disable -->
-- PLEASE FILL IN THE PR DESCRIPTION HERE ENSURING ALL CHECKLIST ITEMS (AT THE BOTTOM) HAVE BEEN CONSIDERED.
 - Because https://github.com/vllm-project/vllm/pull/34510 this issue Move InputPreprocessor, so we need to fix.
+- ---
+- <details>
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -106,25 +107,19 @@
 **[PR #1609](https://github.com/vllm-project/vllm-omni/pull/1609)** - Fix filepath resolution for model with subdir and GLM-Image generation
 
 **Fixed**:
-- <!-- markdownlint-disable -->
-- PLEASE FILL IN THE PR DESCRIPTION HERE ENSURING ALL CHECKLIST ITEMS (AT THE BOTTOM) HAVE BEEN CONSIDERED.
 - Resolves #1608
+- This PR fixed the file path resolution in stage util for models which have `model_subdir` or `tokenizer_subdir`, and so that enabled GLM-Image generation with model ID.
+- Offline generation of GLM-Image
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
 
 ## 2026-03 - Week 1
 
-### 2026-03-04
-**[PR #1644](https://github.com/vllm-project/vllm-omni/pull/1644)** - IPC serialization fix
-
-**Changed**:
-- Improved IPC serialization for numpy scalars
-- Prevents multi-process communication failures
-
 ---
 
-*本文件由 vllm-omni-skills auto-update 系统自动维护*
+*Maintained by vllm-omni-skills auto-update system*
+*Archived every 4 weeks (aligned with vllm-omni release cycle)*

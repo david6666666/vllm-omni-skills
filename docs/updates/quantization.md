@@ -1,7 +1,7 @@
-# vllm-omni-quantization 更新日志
+# vllm-omni-quantization Update Log
 
-> 最后更新: 2026-03-04
-> [查看所有skills更新](../CHANGELOG.md) | [返回索引](README.md)
+> Last updated: 2026-03-04
+> [View all skills updates](../CHANGELOG.md) | [Back to index](README.md)
 
 ---
 
@@ -14,7 +14,7 @@
 - ```Dockerfile
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -23,12 +23,12 @@
 **[PR #1515](https://github.com/vllm-project/vllm-omni/pull/1515)** - fix offline text_to_image error from #1009
 
 **Fixed**:
-- <!-- markdownlint-disable -->
-- PLEASE FILL IN THE PR DESCRIPTION HERE ENSURING ALL CHECKLIST ITEMS (AT THE BOTTOM) HAVE BEEN CONSIDERED.
 - fix #1512
+- ```
+- python examples/offline_inference/text_to_image/text_to_image.py   --model /workspace/models/black-forest-labs/FLUX.2-klein-4B     --prompt "a photo of a forest with mist swirling around the tree trunks. The word 'FLUX.2' is painted over it in big, red brush strokes with visible texture"   --height 768   --width 1360   --seed 42   --cfg-scale 4.0   --num-images-per-prompt 1   --num-inference-steps 40   --output outputs/flux2_klein_4b.png
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -42,7 +42,7 @@
 - tests/examples/online_serving/test_qwen2_5_omni.py::test_send_multimodal_request_003[omni_server0]
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -52,11 +52,11 @@
 
 **Fixed**:
 - When init class of OmniDiffusion, it may cause unexpected crash since var "pipeline_class" may not be initialied.
-- <!-- markdownlint-disable -->
-- PLEASE FILL IN THE PR DESCRIPTION HERE ENSURING ALL CHECKLIST ITEMS (AT THE BOTTOM) HAVE BEEN CONSIDERED.
+- Fix unexpected crash when init OmniDiffusion.
+- python examples/offline_inference/bagel/end2end.py --model /data/BAGEL-7B-MoT --modality text2img --prompts 'A cute cat'
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -66,11 +66,11 @@
 
 **Fixed**:
 - Move some submodule load weights code of HunyuanImage3Pipeline to AutoWeightsLoader:load_weights, fix weights not initialized error.
-- <!-- markdownlint-disable -->
-- PLEASE FILL IN THE PR DESCRIPTION HERE ENSURING ALL CHECKLIST ITEMS (AT THE BOTTOM) HAVE BEEN CONSIDERED.
+- DiffusersPipelineLoader:load_weights added strictly weights load gap verification. Which reports bug when loading HunyuanImage3.0 mode. Move some submodule loading code to AutoWeightsLoader:load_weights to fix this bug.
+- python examples/offline_inference/text_to_image/text_to_image.py --mode /data/HunyuanImage-3.0/ --prompt "A brown and white dog is running on the grass" --output output_image.png --num-inference-steps 50 --guidance-scale 5.0 --tensor-parallel-size 8 --seed 1234
 
 **Updated in skill**:
-- ✅ (自动标记)
+- ✅ (auto-marked)
 
 ---
 
@@ -79,5 +79,5 @@
 
 ---
 
-*本文件由 vllm-omni-skills auto-update 系统自动维护*
-*每4周归档一次（对应vllm-omni的release周期）*
+*Maintained by vllm-omni-skills auto-update system*
+*Archived every 4 weeks (aligned with vllm-omni release cycle)*
