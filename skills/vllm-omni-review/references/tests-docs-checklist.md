@@ -33,6 +33,13 @@ Use this format. Keep it short and actionable.
 - Numeric assertions avoid direct float `==` / `!=` and use tolerances/approx checks.
 - Test names and failure messages are readable and help locate the issue quickly.
 
+### Optional References (use as needed)
+
+- CI test levels: `https://docs.vllm.ai/projects/vllm-omni/en/latest/contributing/ci/CI_5levels/`
+- Test markers: `https://docs.vllm.ai/projects/vllm-omni/en/latest/contributing/ci/tests_markers/`
+- Tests entry point: `https://github.com/vllm-project/vllm-omni/tree/main/tests`
+- For anything else, open the most relevant pages under `vllm-omni/docs` based on the PR's change points.
+
 ### 3) Docs Sync Checklist (examples ↔ docs)
 
 - If `examples/` README/docs were changed, ensure the corresponding `docs/` entry points are updated (avoid stale user-facing docs). If the repository uses MkDocs, run `mkdocs serve` to preview the docs site locally and verify the navigation/entry pages reflect the changes.
