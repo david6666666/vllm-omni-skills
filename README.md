@@ -20,6 +20,7 @@ A collection of AI assistant skills for [vLLM-Omni](https://github.com/vllm-proj
 | [vllm-omni-contrib](skills/vllm-omni-contrib/) | Contributing new models and development workflow |
 | [vllm-omni-cicd](skills/vllm-omni-cicd/) | CI/CD pipelines for model deployments |
 | [vllm-omni-review](skills/vllm-omni-review/) | PR review guidelines, checklists, and common pitfalls |
+| [vllm-omni-bug](skills/vllm-omni-bug/) | Bug/bugfix review: regression reproduction and test coverage (bug-test-coverage) |
 
 ## Installation
 
