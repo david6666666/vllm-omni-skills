@@ -284,7 +284,8 @@ Required updates:
 1. `docs/user_guide/diffusion/parallelism_acceleration.md` — parallelism support table
 2. `docs/user_guide/diffusion/teacache.md` — if TeaCache supported
 3. `docs/user_guide/diffusion/cache_dit_acceleration.md` — if Cache-DiT supported
-4. `docs/user_guide/examples/` — offline/online serving docs
+4. `examples/offline_inference/xxx/README.md` — offline example docs
+5. `examples/online_serve/xxx/README.md` — online serve docs
 
 ### Step 8: Add E2E Tests (Recommended)
 
