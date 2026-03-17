@@ -42,8 +42,7 @@ Use the title prefix and changed directories to decide whether a domain skill is
 
 | Signal | Action |
 |--------|--------|
-| `[Image]`, `[ImageGen]` | Use `vllm-omni-image-gen` |
-| `[Video]`, `[VideoGen]` | Use `vllm-omni-video-gen` |
+| `[Model]`, `[New Model]`, `[Image]`, `[ImageGen]`, `[Video]`, `[VideoGen]`, `[Diffusion]` | → [Diffusion Model PR Review](#diffusion-model-pr-review) |
 | `[Audio]`, `[TTS]` | Use `vllm-omni-audio-tts` |
 | `[Multimodal]` | Use `vllm-omni-multimodal` |
 | `[Distributed]` | Use `vllm-omni-distributed` |
@@ -52,7 +51,6 @@ Use the title prefix and changed directories to decide whether a domain skill is
 | `[Hardware]` or backend-specific code | Use `vllm-omni-hardware` |
 | `[API]` or `vllm_omni/entrypoints/` changes | Use `vllm-omni-api` |
 | `[CI]` | Use `vllm-omni-cicd` |
-| `[Model]` | Use `vllm-omni-contrib` |
 
 If the PR spans multiple specialized areas, choose the primary skill first and load a secondary skill only when the diff crosses a real subsystem boundary.
 
