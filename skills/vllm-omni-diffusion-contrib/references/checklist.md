@@ -102,7 +102,7 @@ At least one of the following must be implemented:
 
 | Feature | Detection Pattern | Notes |
 |---------|------------------|-------|
-| **CPU Offload** | `cpu_offload`, `offload_to_cpu`, `--cpu-offload-gb` | Move weights to CPU when idle |
+| **CPU Offload** | `cpu_offload`, `offload_to_cpu`, `--enable-cpu-offload` | Move weights to CPU when idle |
 | **Quantization** | `quantization`, `int8`, `fp8`, `bnb`, `bitsandbytes` | Reduced precision weights |
 | **VAE Tiling** | `vae_tiling`, `tile_size`, `tiled_decode` | Decode VAE in spatial tiles |
 

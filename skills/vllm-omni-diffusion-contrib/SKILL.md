@@ -151,7 +151,7 @@ Please implement and document which feature is supported.
 
 | Feature | Patterns to Detect |
 |---------|-------------------|
-| CPU Offload | `cpu_offload`, `offload_to_cpu`, `--cpu-offload-gb` |
+| CPU Offload | `cpu_offload`, `offload_to_cpu`, `--enable-cpu-offload` |
 | Quantization | `quantization`, `int8`, `fp8`, `bnb`, `bitsandbytes`, `load_in_8bit` |
 | VAE Tiling | `vae_tiling`, `tile_size` |
 

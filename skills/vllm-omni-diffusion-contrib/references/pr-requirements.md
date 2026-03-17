@@ -130,7 +130,7 @@ vllm serve org/model-id --omni --teacache-thresh 0.15
 
 | Feature | Supported | CLI Flag / Config Key |
 |---------|----------|----------------------|
-| CPU Offload | ✅ | `--cpu-offload-gb 10` |
+| CPU Offload | ✅ | `--enable-cpu-offload` |
 | FP8 Quantization | ✅ | `--quantization fp8` |
 | VAE Tiling | ✅ | `vae_tiling: true` |
 
@@ -138,7 +138,7 @@ vllm serve org/model-id --omni --teacache-thresh 0.15
 
 ```bash
 # CPU offload (reduces VRAM from XX GB to YY GB)
-vllm serve org/model-id --omni --cpu-offload-gb 10
+vllm serve org/model-id --omni --enable-cpu-offload
 
 # FP8 quantization
 vllm serve org/model-id --omni --quantization fp8
