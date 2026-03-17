@@ -208,13 +208,11 @@ outputs = omni.generate(
 ```markdown
 ## Expected Performance
 
-Performance measured on H100 GPU:
+Performance measured on [GPU type]:
 
 | Configuration | Generation Time | Memory | Notes |
 |---------------|-----------------|--------|-------|
-| 1024x1024, 28 steps | 2.1s | 24GB | SD3.5-medium |
-| 720p, 81 frames, 40 steps | 45s | 68GB | Wan2.2-T2V |
-| 10s audio, 100 steps | 3.2s | 8GB | Stable Audio |
+| [res/frames/duration], [N] steps | [X.Xs] | [XGB] | [variant] |
 
 **Notes:**
 - Generation time scales with resolution/frame count
@@ -230,9 +228,9 @@ Performance measured on H100 GPU:
 
 | Metric | Diffusers | vLLM-Omni | Notes |
 |--------|-----------|-----------|-------|
-| FID Score | 12.5 | 12.5 | Identical |
-| CLIP Score | 0.82 | 0.82 | Identical |
-| Generation Time | 4.2s | 1.1s | 3.8x faster |
+| FID Score | [value] | [value] | [identical / delta] |
+| CLIP Score | [value] | [value] | [identical / delta] |
+| Generation Time | [Xs] | [Xs] | [Nx faster/slower] |
 
 ### Known Differences
 - [List any numerical differences]
@@ -299,7 +297,7 @@ Include when model has known constraints:
 
 vLLM-Omni recipes often reference CLI scripts from the repo:
 
-```markdown
+````markdown
 The CLI examples below are from the vLLM-Omni repo. Clone the repo and run:
 
 ```bash
@@ -308,6 +306,6 @@ python examples/offline_inference/text_to_image/text_to_image.py \
   --prompt "your prompt" \
   --output output.png
 ```
-```
+````
 
 > **Note:** When writing a recipe, use proper markdown code blocks without escaping.
