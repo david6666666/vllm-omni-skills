@@ -119,7 +119,7 @@ For comment budget, phrasing, examples, and posting mechanics, see [references/r
 ## Review Heuristics
 
 - Treat missing tests as the default highest-priority issue.
-- For `[Bugfix]` PRs, require a regression test unless automation is genuinely impossible and the author explains why.
+- For [Bugfix] PRs, require a regression test unless automation is genuinely impossible and the author explains why.
 - For API-facing PRs, prefer contract tests over broad end-to-end smoke tests.
 - For model-path PRs, separate correctness evidence from performance evidence; one does not substitute for the other.
 - Demand measurements for performance, memory, or quality claims.
