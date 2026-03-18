@@ -7,6 +7,11 @@ description: Guide for achieving optimal inference performance with vLLM-Omni di
 
 Use this guide when a user asks how to speed up diffusion inference, reduce latency, lower VRAM, or tune a diffusion pipeline in vLLM-Omni.
 
+> **This skill is designed to stay up to date.** Instead of hardcoding model support
+> tables, it tells you *where to look* in the codebase to discover current capabilities.
+> See [Discovering Current Capabilities](#discovering-current-capabilities) and
+> [Extending This Skill](#extending-this-skill) at the end.
+
 ## Step 0: Understand the Baseline
 
 Before optimizing, establish a baseline:
@@ -246,41 +251,46 @@ Reducing `--num-inference-steps` gives linear speedup but affects quality. Typic
 - Video models: 20–40 steps
 - Distilled models: 4–8 steps
 
-## Model Support Tables
+## Discovering Current Capabilities
 
-### ImageGen Parallelism
+The tables below may become stale as new models and methods are added.
+**Always verify against the live codebase** using these source-of-truth files:
 
-| Model | Ulysses-SP | Ring-SP | CFG | TP | VAE-Patch | EP | HSDP |
-|-------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Qwen-Image | ✅ | ✅ | ✅ | ✅ | ✅ | N/A | ❌ |
-| Z-Image | ✅ | ✅ | ❌ | ✅(TP=2) | ✅ | N/A | ❌ |
-| FLUX.1-dev | ❌ | ❌ | ✅ | ✅ | ❌ | N/A | ✅ |
-| FLUX.2-dev | ❌ | ❌ | ❌ | ✅ | ❌ | N/A | ✅ |
-| FLUX.2-klein | ✅ | ✅ | ❌ | ✅ | ❌ | N/A | ✅ |
-| SD 3.5 | ❌ | ❌ | ❌ | ✅ | ✅ | N/A | ❌ |
-| HunyuanImage3.0 | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ❌ |
-| LongCat-Image | ✅ | ✅ | ❌ | ✅ | ❌ | N/A | ❌ |
+### Parallelism support per model
 
-### VideoGen Parallelism
+Read the canonical table in `docs/user_guide/diffusion/parallelism_acceleration.md`.
+It lists every model with ✅/❌ for each parallelism method (Ulysses-SP, Ring, CFG, TP, VAE-Patch, Expert, HSDP).
 
-| Model | Ulysses-SP | Ring | TP | HSDP | VAE-Patch |
-|-------|:---:|:---:|:---:|:---:|:---:|
-| Wan2.2 T2V | ✅ | ✅ | ✅ | ✅ | ✅ |
-| LTX-2 | ✅ | ✅ | ✅ | ❌ | ❌ |
+To check programmatically whether a specific model supports a method:
 
-### CPU Offload Support
+| Check | How |
+|-------|-----|
+| **Ulysses / Ring SP** | Transformer class defines `_sp_plan`. Search: `grep -r '_sp_plan' vllm_omni/diffusion/models/` |
+| **CFG Parallel** | Pipeline or transformer inherits `CFGParallelMixin`. Search: `grep -r 'CFGParallelMixin' vllm_omni/diffusion/models/` |
+| **TP** | Transformer uses `ColumnParallelLinear` / `RowParallelLinear` / `QKVParallelLinear`. Search: `grep -r 'ParallelLinear\|QKVParallel' vllm_omni/diffusion/models/<model>/` |
+| **Layerwise offload** | Pipeline defines `_layerwise_offload_blocks_attr`. Search: `grep -r '_layerwise_offload_blocks_attr' vllm_omni/diffusion/models/` |
+| **torch.compile** | Transformer defines `_repeated_blocks`. Search: `grep -r '_repeated_blocks' vllm_omni/diffusion/models/` |
+| **HSDP** | Check `DiffusionParallelConfig` usage in docs and tests. |
 
-| Model | Model-level | Layerwise |
-|-------|:-----------:|:---------:|
-| Wan2.2 T2V/I2V | ✅ | ✅ |
-| Qwen-Image | ✅ | ✅ |
-| Others | ✅ (expected) | Needs `_layerwise_offload_blocks_attr` |
+### Cache acceleration support
 
-### Cache Acceleration
+- **Excluded models**: listed in `_NO_CACHE_ACCELERATION` in `vllm_omni/diffusion/registry.py`. Any pipeline class in that set does **not** support `tea_cache` or `cache_dit`.
+- **TeaCache supported models**: check `docs/user_guide/diffusion/teacache.md` for the current list.
+- **Cache-DiT**: all DiT-based models not in `_NO_CACHE_ACCELERATION`. See `docs/user_guide/diffusion/cache_dit_acceleration.md`.
 
-**TeaCache**: Qwen-Image, Qwen-Image-Edit, Qwen-Image-Edit-2509, Qwen-Image-Layered, BAGEL
+### Quantization support
 
-**Cache-DiT**: All DiT-based models except `NextStep11Pipeline`, `StableDiffusionPipeline`
+- **Available methods**: listed in `vllm_omni/diffusion/quantization/`. Each `.py` file is a method (e.g., `fp8.py`, `gguf.py`).
+- **Config**: `OmniDiffusionConfig.quantization` field in `vllm_omni/diffusion/data.py`.
+- **Docs**: `docs/user_guide/diffusion/quantization/`
+
+### Available CLI flags (online serving)
+
+Run `vllm serve --help` and look for `--omni`-related flags. Key flags:
+`--usp`, `--ring`, `--cfg-parallel-size`, `--tensor-parallel-size`, `--vae-patch-parallel-size`,
+`--cache-backend`, `--quantization`, `--enforce-eager`, `--enable-cpu-offload`,
+`--enable-layerwise-offload`, `--vae-use-slicing`, `--vae-use-tiling`, `--use-hsdp`,
+`--enable-expert-parallel`, `--flow-shift`, `--boundary-ratio`.
 
 ## Quick Recipes
 
@@ -375,4 +385,50 @@ Is output quality paramount?
 | `vllm_omni/diffusion/distributed/cfg_parallel.py` | CFGParallelMixin |
 | `vllm_omni/diffusion/cache/` | TeaCache and CacheDiT backends |
 | `vllm_omni/diffusion/offloader/` | CPU offload backends |
+| `vllm_omni/diffusion/quantization/` | Quantization backends (fp8, gguf, ...) |
 | `docs/user_guide/diffusion/` | All user-facing docs |
+| `docs/user_guide/diffusion/parallelism_acceleration.md` | Canonical parallelism support table |
+
+## Extending This Skill
+
+When a **new optimization method** is added to vLLM-Omni, update this skill as follows:
+
+### Adding a new lossless method
+
+1. Add a subsection under **Step 1** with: What / How / Speedup / Requirements / Source.
+2. Update the **Discovering Current Capabilities** section with a "How to check" row
+   (e.g., what attribute or class to grep for to confirm model support).
+3. Add a recipe under **Quick Recipes** if the method is broadly useful.
+4. Update the **Decision Flowchart** if the method creates a new decision branch.
+5. Add the key source file to the **Key Source Files** table.
+
+### Adding a new lossy method
+
+1. Add a subsection under **Step 2** with: What / How / Speedup / Quality impact / Config.
+2. Note which models are excluded (if any) and where exclusion is tracked in code
+   (e.g., a set in `registry.py`).
+3. Update the **Decision Flowchart**.
+
+### Adding a new quantization method
+
+1. Add under **Step 1 → 1.5 Quantization** with: What / How / Requirements / VRAM savings.
+2. Note the source file in `vllm_omni/diffusion/quantization/`.
+
+### Adding a new parallelism method
+
+1. Add under **Step 1 → 1.2 Multi-GPU Parallelism** with: What / How / Constraint / CLI flag.
+2. Add a grep instruction to the **Discovering Current Capabilities** table
+   (e.g., "Transformer defines `_new_attr`").
+3. Update `docs/user_guide/diffusion/parallelism_acceleration.md` with the
+   new column in the support table.
+
+### General guidelines
+
+- Prefer **"check the code" instructions** over static tables. Tables go stale;
+  grep commands don't.
+- Always include the **CLI flag** for both offline (`--flag-name`) and online
+  serving (`--flag-name` via `vllm serve`). Online serving flags sometimes differ
+  (e.g., `--ulysses-degree` offline vs `--usp` online).
+- Include a **Source** pointer so developers can find the implementation.
+- After updating the skill, test it by asking the agent to optimize a model
+  and verify it discovers the new method correctly.
