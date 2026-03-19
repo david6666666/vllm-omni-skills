@@ -58,7 +58,7 @@ If the PR spans multiple specialized areas, choose the primary skill first and l
 
 For multi-skill routing, hardware detection, and delegation rules, see [references/review-routing.md](references/review-routing.md).
 
-### Step 3: Load Only the Relevant Review Reference
+### Step 3: Load Only the Relevant Review References (and Required Outputs)
 
 Load targeted references based on the diff:
 
@@ -67,19 +67,14 @@ Load targeted references based on the diff:
 | `vllm_omni/engine/`, `vllm_omni/stages/`, `vllm_omni/connectors/`, `vllm_omni/diffusion/` | [references/pitfalls.md](references/pitfalls.md)           |
 | Async, distributed coordination, validation, connector behavior                           | [references/code-patterns.md](references/code-patterns.md) |
 | Scheduler, stage boundaries, execution model, critical paths                              | [references/architecture.md](references/architecture.md)   |
+| High-risk changes (core logic, configs/params, error handling, concurrency/distributed, I/O) or `[Feature]` / `[Bugfix]` PRs | [references/tests-docs-checklist.md](references/tests-docs-checklist.md) |
 
 Avoid loading all three by default. Start with the one that matches the changed files or the most likely failure mode.
 
-### Step 4: Produce Structured Test/Doc Outputs (When Required)
-For high-risk changes (core logic, configs/params, error handling, concurrency/distributed, I/O) and for `[Feature]` / `[Bugfix]` PRs, produce:
+If the tests/docs addendum is triggered, include in the review body:
 
 - A **coverage matrix** (change point → existing tests → gap → minimal add)
-- A **PR description checklist** (environment + runtime estimate + short fill-in template)
-
-Use the addendum template and checklists here:
-
-- [PR Tests & Docs Review Addendum](references/tests-docs-checklist.md)
-
+- A **review addendum snippet** (environment + runtime estimate + short fill-in template)
 
 ### Step 4: Run the Critical Checks
 
