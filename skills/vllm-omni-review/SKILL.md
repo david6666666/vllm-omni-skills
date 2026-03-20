@@ -104,6 +104,10 @@ Then apply these checks:
 - Are performance claims backed by benchmark data? (Look for tables in PR body)
 - Are API or config changes validated early and documented?
 - Does the change preserve cleanup, state transitions, and distributed invariants?
+- **Does the PR introduce new environment variables?** If so, ask the contributor to explain:
+  - Why this environment variable is necessary (what problem does it solve?)
+  - Whether there are alternatives (config file, CLI flag, API parameter) that could avoid runtime environment dependencies
+  - Environment variables should be a last resort for configuration that cannot be achieved through other means
 
 If a finding is speculative, do not comment. Fetch a bit more code context first or drop it.
 
