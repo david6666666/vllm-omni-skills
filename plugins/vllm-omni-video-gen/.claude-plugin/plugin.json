@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-video-gen",
+  "version": "1.0.0",
+  "description": "Video generation workflows for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

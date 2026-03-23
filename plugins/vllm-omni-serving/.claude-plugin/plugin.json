@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-serving",
+  "version": "1.0.0",
+  "description": "Production model serving and API server configuration for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

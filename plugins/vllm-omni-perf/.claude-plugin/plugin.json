@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-perf",
+  "version": "1.0.0",
+  "description": "Performance tuning, benchmarking, and acceleration for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

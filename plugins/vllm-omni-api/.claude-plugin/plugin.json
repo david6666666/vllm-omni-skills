@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-api",
+  "version": "1.0.0",
+  "description": "OpenAI-compatible API client integration for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

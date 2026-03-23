@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-quantization",
+  "version": "1.0.0",
+  "description": "Quantization workflows and troubleshooting for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

@@ -7,10 +7,23 @@ vllm-omni-skills/
 ├── README.md
 ├── LICENSE
 ├── .gitignore
+├── .claude-plugin/
+│   └── marketplace.json
 ├── docs/
 │   ├── PRD.md
 │   ├── ARCHITECTURE.md
 │   └── TEST_DESIGN.md
+├── plugins/
+│   ├── vllm-omni-review/
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   └── skills/
+│   │       └── vllm-omni-review -> ../../../skills/vllm-omni-review
+│   └── vllm-omni-*/
+│       ├── .claude-plugin/
+│       │   └── plugin.json
+│       └── skills/
+│           └── vllm-omni-* -> ../../../skills/vllm-omni-*
 ├── scripts/
 │   └── validate_all.py
 └── skills/
@@ -103,6 +116,16 @@ Every skill follows the same three-layer structure:
 - Deterministic utility scripts for validation, health checks, benchmarking
 - Python or shell scripts that produce structured output
 - Saves tokens and ensures consistency
+
+## Claude Code Marketplace Packaging
+
+The repository now exposes each canonical skill as an installable Claude Code plugin without duplicating the skill source.
+
+- `.claude-plugin/marketplace.json` declares the marketplace and maps plugin names to `plugins/`
+- Each `plugins/vllm-omni-*` directory contains a minimal `plugin.json`
+- `plugins/vllm-omni-*/skills/vllm-omni-*` is a symlink back to the canonical directory under `skills/`
+
+This keeps Codex/manual installs using `skills/` unchanged while allowing Claude Code users to install a single skill with `/plugin install <plugin>@vllm-omni-skills`.
 
 ## SKILL.md Template
 

@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-audio-tts",
+  "version": "1.0.0",
+  "description": "Audio generation and TTS guidance for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-distributed",
+  "version": "1.0.0",
+  "description": "Distributed inference, disaggregation, and Ray for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

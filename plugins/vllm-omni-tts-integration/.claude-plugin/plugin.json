@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-tts-integration",
+  "version": "1.0.0",
+  "description": "Adding new TTS models and streaming speech serving to vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}
