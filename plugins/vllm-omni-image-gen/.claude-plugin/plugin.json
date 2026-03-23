@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-image-gen",
+  "version": "1.0.0",
+  "description": "Image generation and editing guidance for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

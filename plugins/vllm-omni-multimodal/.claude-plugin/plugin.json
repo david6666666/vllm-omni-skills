@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-multimodal",
+  "version": "1.0.0",
+  "description": "End-to-end omni-modality model workflows for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

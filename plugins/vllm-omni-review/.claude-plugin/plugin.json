@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-review",
+  "version": "1.0.0",
+  "description": "PR review guidelines, checklists, and pitfalls for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

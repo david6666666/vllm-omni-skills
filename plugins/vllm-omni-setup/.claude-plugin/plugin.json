@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-setup",
+  "version": "1.0.0",
+  "description": "Installation and environment setup for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

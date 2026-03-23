@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-recipe",
+  "version": "1.0.0",
+  "description": "Recipe authoring guidance for omnimodal deployments.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

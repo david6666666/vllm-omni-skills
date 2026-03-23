@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-cicd",
+  "version": "1.0.0",
+  "description": "CI/CD pipelines for vLLM-Omni model deployments.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}

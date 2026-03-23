@@ -13,6 +13,7 @@ A collection of AI assistant skills for [vLLM-Omni](https://github.com/vllm-proj
 | [vllm-omni-image-gen](skills/vllm-omni-image-gen/) | Image generation and editing (FLUX, SD3, Qwen-Image, BAGEL, etc.) |
 | [vllm-omni-video-gen](skills/vllm-omni-video-gen/) | Video generation (Wan2.2 T2V/I2V/TI2V) |
 | [vllm-omni-audio-tts](skills/vllm-omni-audio-tts/) | Audio generation and TTS (Qwen3-TTS, MiMo-Audio, Stable-Audio) |
+| [vllm-omni-tts-integration](skills/vllm-omni-tts-integration/) | Adding new TTS models and production speech-serving integrations |
 | [vllm-omni-multimodal](skills/vllm-omni-multimodal/) | End-to-end omni-modality models (Qwen-Omni) |
 | [vllm-omni-distributed](skills/vllm-omni-distributed/) | Distributed inference, disaggregation, Ray |
 | [vllm-omni-perf](skills/vllm-omni-perf/) | Performance tuning, benchmarking, TeaCache, CPU offloading |
@@ -38,9 +39,23 @@ Or symlink for shared use:
 ln -s /path/to/vllm-omni-skills/skills/ ~/.cursor/skills/vllm-omni/
 ```
 
-### For Claude / Codex
+### For Claude Code
 
-Copy skills into your Codex skills directory:
+Add this repository as a plugin marketplace:
+
+```bash
+/plugin marketplace add hsliuustc0106/vllm-omni-skills
+```
+
+Install a specific skill plugin, for example the review skill:
+
+```bash
+/plugin install vllm-omni-review@vllm-omni-skills
+```
+
+Claude Code's install command uses `plugin@marketplace`; after adding this repository, the marketplace name is `vllm-omni-skills`.
+
+### For Codex
 
 ```bash
 cp -r skills/* ~/.codex/skills/
@@ -77,14 +92,22 @@ python scripts/validate_all.py skills/vllm-omni-setup/
 vllm-omni-skills/
 ├── README.md
 ├── LICENSE
+├── .claude-plugin/
+│   └── marketplace.json   # Claude Code marketplace manifest
 ├── docs/
 │   ├── PRD.md              # Product requirements
 │   ├── ARCHITECTURE.md     # Architecture design
 │   └── TEST_DESIGN.md      # Test design
+├── plugins/
+│   └── vllm-omni-*/        # Claude Code plugin wrappers
+│       ├── .claude-plugin/
+│       │   └── plugin.json # Per-plugin manifest
+│       └── skills/
+│           └── vllm-omni-* # Symlink to canonical skill content
 ├── scripts/
 │   └── validate_all.py     # Skill validation tool
 └── skills/
-    └── vllm-omni-*/        # 14 skill directories
+    └── vllm-omni-*/        # 16 skill directories
         ├── SKILL.md         # Main skill instructions
         ├── references/      # Detailed reference docs
         └── scripts/         # Utility scripts (some skills)

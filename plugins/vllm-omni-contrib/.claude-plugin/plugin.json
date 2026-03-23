@@ -1,0 +1,8 @@
+{
+  "name": "vllm-omni-contrib",
+  "version": "1.0.0",
+  "description": "Contributing new models and development workflow for vLLM-Omni.",
+  "author": {
+    "name": "hsliuustc0106"
+  }
+}
