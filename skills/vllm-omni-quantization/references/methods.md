@@ -1,6 +1,20 @@
-# AR Quantization Methods Reference
+# General Quantization Methods Reference
 
-This file covers autoregressive and general `vllm` quantization paths used by `vllm-omni`. For diffusion `fp8` and `gguf`, see `diffusion.md`.
+This file covers autoregressive and unified `vllm` quantization entrypoints used by `vllm-omni`. For diffusion-specific `fp8`, `int8`, `gguf`, and model-wiring details, see `diffusion.md` and `adding-models.md`.
+
+## Unified Entry Point
+
+Use `vllm_omni.quantization.build_quant_config()` as the primary entrypoint.
+
+Supported input shapes:
+
+- `None` or `"none"` -> disables quantization
+- method string such as `"fp8"` or `"awq"`
+- flat dict with `"method"`
+- per-component dict such as `{"transformer": {"method": "fp8"}, "vae": None}`
+- already-built `QuantizationConfig`
+
+Per-component dicts are routed by `ComponentQuantizationConfig` using longest-prefix match. This is the main bridge between unified config syntax and model-specific quantization scope.
 
 ## AWQ (Activation-Aware Weight Quantization)
 
@@ -58,6 +72,17 @@ vllm serve <model> --omni --quantization fp8
 vllm serve <model> --omni --kv-cache-dtype fp8
 ```
 
+## ModelOpt Checkpoints
+
+For multi-stage omni models, the main tested path is pre-quantized ModelOpt checkpoints rather than online quantizing the entire pipeline.
+
+| Format | Hardware | Notes |
+|--------|----------|-------|
+| ModelOpt FP8 | Ada/Hopper (SM 89+) | Tested on Qwen3-Omni thinker checkpoints |
+| ModelOpt NVFP4 | Blackwell (SM 100+) | Experimental; can load but quality may be unacceptable |
+
+Key rule: quantization scope should remain constrained to the intended component, such as the thinker `language_model`, while audio/vision encoders, talker, and code2wav remain BF16 unless explicitly supported.
+
 ## SqueezeLLM
 
 - **Precision**: Mixed (sparse + quantized)
@@ -91,3 +116,5 @@ vllm serve <model> --omni --dtype float16    # for Volta/Turing (V100, RTX 20 se
 | FP8 weights | ~2x | None | H100+ | Minimal |
 | FP8 KV cache | KV only | None | A100+ | Minimal |
 | SqueezeLLM | ~2-3x | Medium | Any CUDA | Low |
+| ModelOpt FP8 | ~2x on scoped component | Offline/pre-quantized checkpoint | Ada/Hopper | Model-specific |
+| ModelOpt NVFP4 | >2x on scoped component | Offline/pre-quantized checkpoint | Blackwell | Experimental |
