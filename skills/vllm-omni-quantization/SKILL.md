@@ -1,56 +1,63 @@
 ---
 name: vllm-omni-quantization
-description: Use when working on vLLM-Omni quantization for autoregressive or diffusion models, choosing methods such as `awq`, `gptq`, `fp8`, or `gguf`, adding diffusion methods like `int8` or `nvfp4`, or debugging memory, loader, quality, or performance issues.
+description: Use when working on vLLM-Omni quantization for autoregressive, diffusion, or multi-stage omni models, choosing methods such as `awq`, `gptq`, `fp8`, `int8`, `gguf`, or ModelOpt checkpoints, adding quantized model support, or debugging memory, loader, quality, or performance issues.
 ---
 
 # vLLM-Omni Quantization
 
 ## Overview
 
-Use this skill for `vllm-omni` quantization work. Quantization work in this codebase splits into two distinct paths:
+Use this skill for `vllm-omni` quantization work. The current codebase has a unified quantization framework centered on `vllm_omni.quantization.build_quant_config()`, but the runtime integration still splits into distinct patterns:
 
-- AR and omni-model quantization inherited from upstream `vllm`
-- diffusion quantization for DiT models in `vllm-omni`, currently `fp8` and `gguf`
+- AR and general quantization inherited from upstream `vllm`
+- diffusion quantization for DiT models in `vllm-omni`, currently `fp8`, `int8`, and `gguf`
+- multi-stage omni quantization using scoped pre-quantized checkpoints such as Qwen3-Omni thinker ModelOpt checkpoints
 
-Core principle: keep generic quantization infrastructure in upstream `vllm`. Keep `vllm-omni` focused on diffusion-specific config glue, model wiring, adapter logic, and verification.
+Core principle: keep generic quantization infrastructure in upstream `vllm`. Keep `vllm-omni` focused on unified config routing, component scoping, diffusion-specific model wiring, adapter logic, and verification.
 
 ## Quick Decision
 
 | Task | Use |
 |------|-----|
 | Quantize Qwen-Omni, Qwen-TTS, or another AR-backed model | `references/methods.md` and `references/modality-compat.md` |
-| Reduce KV cache memory | `references/methods.md` |
-| Quantize diffusion transformer weights with `fp8` or `gguf` | `references/diffusion.md` |
-| Add a diffusion method such as `int8` or `nvfp4` | `references/diffusion.md` |
+| Use `build_quant_config()` or per-component quantization | `references/methods.md` |
+| Quantize diffusion transformer weights with `fp8`, `int8`, or `gguf` | `references/diffusion.md` |
+| Add quantization support to a new diffusion model | `references/adding-models.md` |
+| Add a new quantization method such as `nvfp4` or a new ModelOpt path | `references/diffusion.md` and `references/adding-models.md` |
 | Unsure whether a change belongs in `vllm` or `vllm-omni` | `references/diffusion.md` |
 
 ## When to Use
 
 - Choosing a quantization method for memory or throughput
 - Checking whether a modality or model family actually supports quantization
-- Enabling diffusion `fp8` or `gguf`
-- Adding a new diffusion quantization method
+- Using the unified `build_quant_config()` entrypoint or per-component config dicts
+- Enabling diffusion `fp8`, `int8`, or `gguf`
+- Adding a new diffusion quantization method or a pre-quantized multi-stage model path
 - Debugging quantized loading, tensor-name mapping, shape mismatch, quality drift, or performance regressions
 
 ## AR vs Diffusion Boundary
 
-- AR quantization usually means upstream `vllm` methods such as `awq`, `gptq`, `fp8`, and KV-cache FP8.
-- Diffusion quantization means `vllm-omni` DiT-specific integration and should not duplicate upstream `vllm` kernels or config semantics.
+- AR and general quantization usually mean upstream `vllm` methods such as `awq`, `gptq`, `fp8`, and KV-cache FP8.
+- Diffusion quantization means `vllm-omni` DiT-specific integration on top of the unified framework and should not duplicate upstream `vllm` kernels or config semantics.
+- Multi-stage omni quantization often means pre-quantized checkpoints whose scope must be constrained to the intended component, such as the thinker `language_model`.
 
-Rule: if a new method is missing generic kernels, loader behavior, or config classes, fix upstream `vllm` first. Only add a thin diffusion wrapper in `vllm-omni`.
+Rule: if a new method is missing generic kernels, loader behavior, or config classes, fix upstream `vllm` first. `vllm-omni` should add thin wrappers, component routing, and model-specific wiring, not a private quantization stack.
 
 ## Common Mistakes
 
 | Symptom | Likely Cause | Fix |
 |--------|--------------|-----|
 | `quantization` flag has no visible effect | wrong model stage or unsupported modality | check `references/modality-compat.md` |
+| unified config behaves unexpectedly | per-component dict, default routing, or method override is misunderstood | check `references/methods.md` and `references/diffusion.md` |
 | AR model quality drops too much | aggressive 4-bit setup or wrong method | check calibration and method tradeoffs in `references/methods.md` |
-| diffusion method works on one image only | no baseline comparison or controlled verification | use fixed-seed BF16 comparison from `references/diffusion.md` |
+| diffusion method works on one image only | no baseline comparison, no LPIPS gate, or no `ignored_layers` tuning | use the verification flow in `references/diffusion.md` and `references/adding-models.md` |
 | GGUF mapping fails | missing architecture-specific adapter | add explicit adapter logic, do not rely on generic fallback |
-| new diffusion method design keeps growing | upstream/downstream boundary is unclear | re-check ownership before touching model code |
+| new quantization method design keeps growing | unified framework boundary is unclear | re-check ownership before touching model code |
+| multi-stage omni checkpoint loads but wrong stages get quantized | component scope is not constrained correctly | check component routing and model config normalization |
 
 ## References
 
 - AR and general methods: [references/methods.md](references/methods.md)
 - Model and modality support matrix: [references/modality-compat.md](references/modality-compat.md)
-- Diffusion `fp8`, `gguf`, and new-method workflow: [references/diffusion.md](references/diffusion.md)
+- Diffusion `fp8`, `int8`, `gguf`, and unified-framework workflow: [references/diffusion.md](references/diffusion.md)
+- Adding quantization support to a new model: [references/adding-models.md](references/adding-models.md)
