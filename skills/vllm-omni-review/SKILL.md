@@ -42,6 +42,7 @@ Fetch:
 - The diff
 - Linked issues for `[Bugfix]` and `[Feature]` PRs only when conventions are unclear
 - Related PRs only when conventions or prior decisions are unclear
+- If a CI job/log URL is provided (e.g. Buildkite step link), extract the failing job, first error, and the PR/commit being tested (branch/sha/pr number)
 
 Do not fetch broad extra context unless the diff leaves real ambiguity.
 
